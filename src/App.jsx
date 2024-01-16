@@ -68,11 +68,18 @@ const App = () => {
   const [searchTerm, setSearchTerm] = useStorageState('search', 'React')
 
   const [stories, setStories] = React.useState([]);
+  const [isLoading, setIsLoading] = React.useState(false);
+  const [isError, setIsError] = React.useState(false);
 
   React.useEffect(() => {
-    getAsyncStories().then(result => {
-      setStories(result.data.stories);
-    });
+    setIsLoading(true);
+
+    getAsyncStories().
+      then(result => {
+        setStories(result.data.stories);
+        setIsLoading(false);
+      })
+      .catch(() => setIsError(true))
   }, []);
 
   const handleRemoveStory = (item) => {
@@ -108,7 +115,24 @@ const App = () => {
 
       <hr />
 
-      <List list = {searchedStories} onRemoveItem={handleRemoveStory} />
+      {/*
+      In JavaScript, a true && 'Hello World' always evaluates to ‘Hello World’. 
+      A false && 'Hello World' always evaluates to false. In React, we can use 
+      this behaviour to our advantage. If the condition is true, the expression 
+      after the logical && operator will be the output. If the condition is false, 
+      React ignores it and skips the expression. Using expession && JSX is more 
+      concise than using expression ? JSX : null.
+      */}
+      {isError && <p>Something went wrong ...</p>}
+
+      {isLoading ? (
+        <p>Loading ...</p>
+      ) : (
+        <List
+          list={searchedStories}
+          onRemoveItem={handleRemoveStory}
+        />
+      )}
     </div>
   );
 };
