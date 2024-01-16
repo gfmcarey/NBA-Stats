@@ -1,5 +1,20 @@
 import * as React from 'react';
 
+//creates a costum hook for us that combines the useState hook with the useEffect hook to store the 
+//value of searchTerm locally (use abstracted "value" for reusability). We pass in a flexible key from
+//the outside so that it doesn't run with an outdated key (also called stale) or our old key 
+const useStorageState = (key, initialState) => {
+  const [value, setValue] = React.useState(
+    localStorage.getItem(key) || initialState
+ );
+
+  React.useEffect(() => {
+    localStorage.setItem(key, value);
+  }, [value, key]);
+
+  return [value, setValue];
+};
+
 const App = () => {
   const stories = [
     {
@@ -21,10 +36,11 @@ const App = () => {
   ];
   
   //uses stored value, if a value exists, to set initial state of the searchTerm
+  /*
   const [searchTerm, setSearchTerm] = React.useState(
     localStorage.getItem('search') || 'React'
     );
-  
+  */
   /*
   React’s useEffect Hook takes two arguments: The first argument is a function that runs 
   our side-effect. In our case, the side-effect stores searchTerm into the browser’s local 
@@ -32,10 +48,12 @@ const App = () => {
   changes, the function for the side-effect is called. In our case, the function is called 
   every time the searchTerm changes (e.g. when a user types into the HTML input field). 
   In addition, it’s also called initially when the component renders for the first time.
-  */
+  
   React.useEffect(() =>{
     localStorage.setItem('search', searchTerm)
   }, [searchTerm]);
+  */
+  const [searchTerm, setSearchTerm] = useStorageState('search', 'React')
 
   const handleSearch = (event) => {
     setSearchTerm(event.target.value);
