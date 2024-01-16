@@ -34,6 +34,17 @@ const initialStories = [
   },
 ];
 
+const getAsyncStories = () =>
+  //short hand version of a promise
+  //Promise.resolve({ data: { stories: initialStories } });
+  //set a delay of two seconds when resolving the data
+  new Promise((resolve) =>
+    setTimeout(
+      () => resolve({ data: { stories: initialStories } }),
+      2000
+    )
+  );
+
 const App = () => {
   
   //uses stored value, if a value exists, to set initial state of the searchTerm
@@ -56,7 +67,13 @@ const App = () => {
   */
   const [searchTerm, setSearchTerm] = useStorageState('search', 'React')
 
-  const [stories, setStories] = React.useState(initialStories)
+  const [stories, setStories] = React.useState([]);
+
+  React.useEffect(() => {
+    getAsyncStories().then(result => {
+      setStories(result.data.stories);
+    });
+  }, []);
 
   const handleRemoveStory = (item) => {
     const newStories = stories.filter(
