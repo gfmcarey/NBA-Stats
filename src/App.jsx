@@ -72,6 +72,7 @@ const App = () => {
       <InputWithLabel
         id = "search"
         value={searchTerm}
+        isFocused
         onInputChange={handleSearch}
       >
         <strong>Search:</strong>
@@ -84,13 +85,52 @@ const App = () => {
   );
 };
 //adding shorthand version of React Fragments by replacing <div> with <>
-const InputWithLabel = ({ id, value, type = 'text', onInputChange, children}) => (
-  <>
-    <label htmlFor={id}>{children}</label>
-    &nbsp;
-    <input id={id} type={type} value={value} onChange={onInputChange}/>
-  </>
-);
+/*
+(A) First, create a ref with React’s useRef Hook. This ref object is a persistent value 
+which stays intact over the lifetime of a React component. It comes with a property called 
+current, which, in contrast to the ref object, can be changed.
+(B) Second, the ref is passed to the element’s JSX-reserved ref attribute and thus element 
+instance gets assigned to the changeable current property.
+(C) Third, opt into React’s lifecycle with React’s useEffect Hook, performing the focus 
+on the element when the component renders (or its dependencies change).
+(D) And fourth, since the ref is passed to the element’s ref attribute, its current 
+property gives access to the element. Execute its focus programmatically as a side-effect, 
+but only if isFocused is set and the current property is existent.
+*/
+const InputWithLabel = ({
+  id,
+  value,
+  type = 'text',
+  onInputChange,
+  isFocused,
+  children,
+}) => {
+  // A
+  const inputRef = React.useRef();
+
+  // C
+  React.useEffect(() => {
+    if (isFocused && inputRef.current) {
+      // D
+      inputRef.current.focus();
+    }
+  }, [isFocused]);
+
+  return (
+    <>
+     <label htmlFor={id}>{children}</label>
+      &nbsp;
+       {/* B */}
+      <input
+        ref={inputRef}
+        id={id}
+        type={type}
+        value={value}
+        onChange={onInputChange}
+      />
+    </>
+  );
+};
 
 const List = ({ list }) => (
   <ul>
