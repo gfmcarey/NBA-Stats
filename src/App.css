@@ -38,13 +38,18 @@
     padding: 5px;
     cursor: pointer;
 
-    transition: all .1s ease-in;
+    transition: all .2s ease-in;
 }
 
 .button:hover {
     background: #171212;
     color: #ffffff;
 }
+
+.button:hover > svg > g {
+    fill: #ffffff;
+    stroke: #ffffff;
+  }
 
 .button_small {
     padding: 5px;
