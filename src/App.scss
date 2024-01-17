@@ -18,46 +18,47 @@
     display: flex;
     align-items: center;
     padding-bottom: 5px;
-}
 
-.item > span {
-    padding: 0 5px;
-    white-space: nowrap;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-}
+    > span {
+        padding: 0 5px;
+        white-space: nowrap;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
 
-.item > span > a {
-    color: inherit;
+        > a {
+            color: inherit;
+        }
+    }
 }
 
 .button {
     background: transparent;
     border: 1px solid #171212;
-    padding: 5px;
     cursor: pointer;
-
-    transition: all .2s ease-in;
-}
-
-.button:hover {
-    background: #171212;
-    color: #ffffff;
-}
-
-.button:hover > svg > g {
-    fill: #ffffff;
-    stroke: #ffffff;
-  }
-
-.button_small {
     padding: 5px;
+    transition: all .2s ease-in;
+
+    &:hover {
+        background: #171212;
+        color: #ffffff;
+    }
+
+    &.button_small {
+        padding: 0px;
+        border: transparent;
+        &:hover {
+            background: transparent;
+            color: red;
+        }
+    }
+
+    &.button_large {
+        padding: 15px;
+    }
 }
 
-.button_large {
-    padding: 10px;
-}
+
 
 .search-form {
     padding: 10px 0 20px 0;

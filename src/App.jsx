@@ -1,7 +1,7 @@
 import * as React from 'react';
 import axios from 'axios';
 
-import './App.css';
+import './App.scss';
 
 //using react-icons library for svg files
 import { MdCancel } from "react-icons/md";
@@ -214,12 +214,10 @@ const Item = ({ item, onRemoveItem }) => (
         type="button"
         onClick={() => onRemoveItem(item)}
         className="button button_small"
-      >
+      > 
         <IconContext.Provider value={{ size: "20px"}}>
           <MdCancel/>
         </IconContext.Provider>
-        
-
         { /* <Check height="18px" width="18px" /> */ }
       </button>
     </span>
