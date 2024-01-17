@@ -1,4 +1,5 @@
 import * as React from 'react';
+import axios from 'axios';
 
 //creates a costum hook for us that combines the useState hook with the useEffect hook to store the 
 //value of searchTerm locally (use abstracted "value" for reusability). We pass in a flexible key from
@@ -120,12 +121,12 @@ const App = () => {
 
     dispatchStories({ type: 'STORIES_FETCH_INIT' });
 
-    fetch(url)
-      .then((response) => response.json()) 
+    axios
+      .get(url) 
       .then((result) => {
         dispatchStories({
           type: 'STORIES_FETCH_SUCCESS',
-          payload: result.hits, 
+          payload: result.data.hits, 
         });
       })
       .catch(() =>
