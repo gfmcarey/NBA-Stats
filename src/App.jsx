@@ -1,12 +1,12 @@
 import * as React from 'react';
 import axios from 'axios';
 
-import { SearchForm } from './SearchForm';
-import { List } from './List';
+import { SearchForm } from './SearchForm/index.jsx';
+import { List } from './List/index.jsx';
 
 import { BrowserRouter, NavLink, Routes, Route } from 'react-router-dom';
 
-import './App.scss';
+import './Style.scss';
 
 //using react-icons library for svg files
 // svg isn't working and I dont know what to do to fix it
@@ -80,7 +80,6 @@ const Navigation = () => (
     <ul>
       <li><NavLink to='/'>Home</NavLink></li>
       <li><NavLink to='/about'>About</NavLink></li>
-      <li><NavLink to='/contact'>Contact</NavLink></li>
     </ul>
   </nav>
 );
@@ -165,18 +164,11 @@ const About = () => (
   </div>
 );
 
-const Contact = () => (
-  <div className='contact'>
-    <h1>Contact Me</h1>
-    <p>You can reach me via email: <strong>hello@example.com</strong></p>
-  </div>
-);
 
 const Main = () => (
   <Routes>
     <Route exact path='/' element={<Home />}></Route>
     <Route exact path='/about' element={<About />}></Route>
-    <Route exact path='/contact' element={<Contact />}></Route>
   </Routes>
 );
 

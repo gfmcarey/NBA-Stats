@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { InputWithLabel } from './InputWithLabel';
+import { InputWithLabel } from '../InputWithLabel/index.jsx';
 
 const SearchForm = ({
     searchTerm,
