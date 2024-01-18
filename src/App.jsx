@@ -4,11 +4,11 @@ import axios from 'axios';
 import { SearchForm } from './SearchForm';
 import { List } from './List';
 
+import { BrowserRouter, NavLink, Routes, Route } from 'react-router-dom';
+
 import './App.scss';
 
 //using react-icons library for svg files
-import { MdCancel } from "react-icons/md";
-import { IconContext } from "react-icons";
 // svg isn't working and I dont know what to do to fix it
 //import { ReactComponent as Check } from './check.svg';
 
@@ -60,6 +60,32 @@ const useStorageState = (key, initialState) => {
 const API_ENDPOINT = 'https://hn.algolia.com/api/v1/search?query=';
 
 const App = () => {
+  
+
+  return (
+    <div className="container">
+      <h1 className="headline-primary">NBA Stats</h1>
+
+      <Navigation />
+      <Main />
+      
+
+      
+    </div>
+  );
+};
+
+const Navigation = () => (
+  <nav>
+    <ul>
+      <li><NavLink to='/'>Home</NavLink></li>
+      <li><NavLink to='/about'>About</NavLink></li>
+      <li><NavLink to='/contact'>Contact</NavLink></li>
+    </ul>
+  </nav>
+);
+
+const Home = () => {
   const [searchTerm, setSearchTerm] = useStorageState(
     'search',
     'React'
@@ -110,27 +136,49 @@ const App = () => {
     event.preventDefault();
   };
 
-  return (
-    <div className="container">
-      <h1 className="headline-primary">My Hacker Stories</h1>
-
+  return(
+    <div className='home'>
       <SearchForm
-        searchTerm={searchTerm}
-        onSearchInput={handleSearchInput}
-        onSearchSubmit={handleSearchSubmit}
-      />
+          searchTerm={searchTerm}
+          onSearchInput={handleSearchInput}
+          onSearchSubmit={handleSearchSubmit}
+        />
 
-      <hr />
+        <hr />
 
-      {stories.isError && <p>Something went wrong ...</p>}
+        {stories.isError && <p>Something went wrong ...</p>}
 
-      {stories.isLoading ? (
-        <p>Loading ...</p>
-      ) : (
-        <List list={stories.data} onRemoveItem={handleRemoveStory} />
-      )}
+        {stories.isLoading ? (
+          <p>Loading ...</p>
+        ) : (
+          <List list={stories.data} onRemoveItem={handleRemoveStory} />
+        )}
     </div>
   );
 };
+
+const About = () => (
+  <div className='about'>
+    <h1>About Me</h1>
+    <p>Ipsum dolor dolorem consectetur est velit fugiat. Dolorem provident corporis fuga saepe distinctio ipsam? Et quos harum excepturi dolorum molestias?</p>
+    <p>Ipsum dolor dolorem consectetur est velit fugiat. Dolorem provident corporis fuga saepe distinctio ipsam? Et quos harum excepturi dolorum molestias?</p>
+  </div>
+);
+
+const Contact = () => (
+  <div className='contact'>
+    <h1>Contact Me</h1>
+    <p>You can reach me via email: <strong>hello@example.com</strong></p>
+  </div>
+);
+
+const Main = () => (
+  <Routes>
+    <Route exact path='/' element={<Home />}></Route>
+    <Route exact path='/about' element={<About />}></Route>
+    <Route exact path='/contact' element={<Contact />}></Route>
+  </Routes>
+);
+
 
 export default App;
